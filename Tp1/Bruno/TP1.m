@@ -94,4 +94,25 @@ figure
 imshow(uint8(FinalRGB3))
 
 %%
+%%%%%% Ejercicio 3
+
+for i = 1:19
+    [BloqueGray4,TamBloqueAumGray4,FlagGray4Col,FlagGray4Fil] = ...
+        DescomGray64Byts(ImagenGray4);
+    [BloqueRGB4,TamBloqueAumRGB4,FlagRGB4Col,FlagRGB4Fil] = ...
+        DescomRGB64Byts(ImagenRGB4);
+    [ProyecsionGray4, MatrProyecGray4] = Transformada(BloqueGray4,i/20);
+    [ProyecsionRGB4, MatrProyecRGB4] = Transformada(BloqueRGB4,i/20);
+    EspGray4 = EsperanzaBloque(BloqueGray4);
+    EspRGB4 = EsperanzaBloque(BloqueRGB4);
+    ReciboGray4 = AntiTransformada(ProyecsionGray4,...
+        MatrProyecGray4,EspGray4);
+    ReciboRGB4 = AntiTransformada(ProyecsionRGB4,...
+        MatrProyecRGB4,EspRGB4);
+    SizeGray4 = size(ImagenGray4);
+    SizeRGB4 = size(ImagenRGB4);
+    FinalGray4 = RecompGray64Byts(ReciboGray4,SizeGray4,...
+        FlagGray4Col,FlagGray4Fil);
+    FinalRGB4 = RecompRGB64Byts(ReciboRGB4,SizeRGB4,...
+        FlagRGB4Col,FlagRGB4Fil);
 
