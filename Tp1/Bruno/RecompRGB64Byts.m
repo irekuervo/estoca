@@ -14,19 +14,18 @@ if FlagSizeInadeCol == 0
         NuevaImagen = zeros(fil, col, prof);
         TamBloqueAum = [fil/8 col/8 prof];
     else
-        NuevImagen = zeros(fil, floor(col/8+1)*8, prof);
-        TamBloqueAum = [fil/8 floor(col/8+1) prof];
+        NuevImagen = zeros(floor(fil/8+1)*8,col);
+        TamBloqueAum = [floor(fil/8+1) col/8];
     end
 else
     if FlagSizeInadeFil == 0 
-        NuevImagen = zeros(floor(fil/8+1)*8, col, prof);
-        TamBloqueAum = [floor(fil/8+1) col/8 prof];
+        NuevImagen = zeros(fil,floor(col/8+1)*8);
+        TamBloqueAum = [fil/8 floor(col/8+1)];
     else
-        NuevImagen = zeros(floor(fil/8+1)*8, floor(col/8+1)*8, prof);
-        TamBloqueAum = [floor(fil/8+1) floor(col/8+1) prof];
+        NuevImagen = zeros(floor(fil/8+1)*8,floor(col/8+1)*8);
+        TamBloqueAum = [floor(fil/8+1) floor(col/8+1)];
     end
 end
-
 FilAmpl = TamBloqueAum(1);
 ColAmpl = TamBloqueAum(2);
 
