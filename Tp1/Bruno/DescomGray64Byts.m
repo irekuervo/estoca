@@ -45,15 +45,15 @@ if FlagSizeInadeCol == 0
         NuevaImagen = zeros(fil,col);
         TamBloqueAum = [fil/8 col/8];
     else
-        BloqueGray = zeros(64,fil/8*floor(col/8+1));
+        BloqueGray = zeros(64,floor(fil/8+1)*col/8);
         NuevImagen = zeros(floor(fil/8+1)*8,col);
-        TamBloqueAum = [fil/8 floor(col/8+1)];
+        TamBloqueAum = [floor(fil/8+1) col/8];
     end
 else
     if FlagSizeInadeFil == 0 
-        BloqueGray = zeros(64,floor(fil/8+1)*col/8);
+        BloqueGray = zeros(64,fil/8*floor(col/8+1));
         NuevImagen = zeros(fil,floor(col/8+1)*8);
-        TamBloqueAum = [floor(fil/8+1) col/8];
+        TamBloqueAum = [fil/8 floor(col/8+1)];
     else
         BloqueGray = zeros(64,floor(fil/8+1)*floor(col/8+1));
         NuevImagen = zeros(floor(fil/8+1)*8,floor(col/8+1)*8);
