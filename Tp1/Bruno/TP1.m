@@ -1,3 +1,7 @@
+close all;
+clear all;
+
+
 %%%%% TP1
 
 %%% El primer paso para trabajar es descargar las imagenes, que estan en la 
@@ -118,7 +122,7 @@ plot((1:19)*5, EMSRGB4)
 hold on
 grid on
 
-%%
+%% E
 
 for i = 1:5
 
