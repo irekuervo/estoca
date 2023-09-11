@@ -2,6 +2,8 @@
 
 function Resultado = CalculoMSE(Original, Reconstruido)
 
+
+
 aux = size(Original);
 
 if length(aux) == 2

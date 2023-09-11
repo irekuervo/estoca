@@ -2,6 +2,12 @@
 
 function Resultado = SolucionGray(ImagenGray,i)
 
+%%% En esta funcion lo que se hace es descomponer una imagen en bloques de
+%%% 8x8, comprimir estos bloques ordenados quedandonos con un i% de la
+%%% informacion, descomprimir la informacion  finalmente recomponer la
+%%% imagen original con informacion faltante. Todo esto trabajando con la
+%%% imagen en escala de grises
+
 [BloqueGray,TamBloqueAumGray,FlagGrayCol,FlagGrayFil] = ...
     DescomGray64Byts(ImagenGray);
 [ProyecsionGray, MatrProyecGray] = Transformada(BloqueGray,i/100);

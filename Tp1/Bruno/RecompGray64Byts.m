@@ -3,6 +3,10 @@
 function [Result] = RecompGray64Byts(BloqueGray, TamImag, ...
     FlagSizeInadeCol, FlagSizeInadeFil)
 
+%%% Hago el proceso inverso de la funcion de descompocicion. Me paso los
+%%% bloques a una matriz vacia y luego me copio la matriz de las
+%%% dimensiones originales  como resultado.
+
 Result = zeros(TamImag);
 
 fil = TamImag(1);

@@ -2,6 +2,11 @@
 
 function [Original] = AntiTransformada(Resultado,MatrTrans,VectMed)
 
+%%% Para obtener los bloques ordenados originales (con perdida de
+%%% informacion porque se suprimieron autovalores) lo que se hace es
+%%% multiplicar los bloques transformados por la matriz de transformacion y
+%%% luego le sumamos la media  X = h*Y + E[X]
+
 Original = MatrTrans*Resultado;
 
 for i = 1:size(VectMed)

@@ -2,6 +2,8 @@
 
 function [MatCovBloque] = CovBloque (Bloque)
 
+
+
 BloqueSize = size(Bloque);
 aux = zeros(BloqueSize(1),BloqueSize(1));
 
