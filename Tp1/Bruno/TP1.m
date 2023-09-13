@@ -109,6 +109,12 @@ FinalGray3 = RecompGray64Byts(ReciboGray3,SizeGray3,...
 FinalRGB3 = RecompRGB64Byts(ReciboRGB3,SizeRGB3,...
     FlagRGB3Col,FlagRGB3Fil);
 
+
+ElementosRGB = length(EspRGB3)+8*8+64*TamBloqueAumRGB3(1)*...
+    TamBloqueAumRGB3(2)*3;
+ElementosGris = length(EspGray3)+8*8+64*TamBloqueAumGray3(1)*...
+    TamBloqueAumGray3(2);
+
 %%
 %%% Grafico las imagenes originales junto con las imagenes que fueron
 %%% comprimidas con un CP = 20%
@@ -127,7 +133,7 @@ imshow(uint8(FinalRGB3))
 title('Imagen 3 en RGB procesada con PC = 20%')
 
 %%
-%%%%%% Ejercicio 3
+%%%%%% Ejercicio 4
 
 EMSGray4 = zeros(19,1);
 EMSRGB4 = zeros(19,1);
@@ -160,6 +166,9 @@ for i = 1:5
     
     figure
     imshow(uint8(FinalGray4))
+    title(['Imagen 4 en RGB procesada con PC = ',num2str(i*5),'%'])
     figure
     imshow(uint8(FinalRGB4))
+    title(['Imagen 4 en escala de grises procesada con PC = ' ... 
+        ,num2str(i*5),'%'])
 end
