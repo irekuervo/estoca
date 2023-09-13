@@ -1,42 +1,43 @@
 close all;
 clear all;
 
+bloqueFil = 8; % 1, 2, 4, 5, 8, 10, 16, 20, 25, 40, 50, 80, 100, 200, 400
+bloqueCol = 8; % 1, 2, 4, 8, 71, 142, 284, 568
 
-bloqueFil = 8;
-bloqueCol = 8;
-CR = 5;
-
-cantAutovectores = cast(100*CR / (bloqueFil*bloqueCol) ,'int32');
-
-img = cargarImg('img_01.jpg');
-[filas,columnas] = size(img);
+img = cast(cargarImg('img_01.jpg'),'uint8');
 
 figure
-imshow(cast(img,'uint8'))
+imshow(img)
 
-X = convertirEnBloques(img, bloqueFil, bloqueCol);
+[ux,Yx,U,f,c] = comprimir(img,bloqueFil, bloqueCol, 2);
 
-Cx = covarianza(X);
-ux = media(X);
-
-[U,D,V] = svd(Cx);
-
-U = V(:,1:cantAutovectores);
-
-Y = U'*(X-ux);
-
-Yx = U*Y + ux;
-
-
-%% Pruebas
-
-% Prueba de conversion de bloques: se debe poder reconstruir
-imgReconstruida = convertirEnImagen(Yx, bloqueFil , bloqueCol, filas, columnas);
+imgDescomprimida = descomprimir(ux,Yx,U,bloqueFil,bloqueCol,f,c);
 
 figure
-imshow(cast(imgReconstruida,'uint8'))
+imshow(imgDescomprimida)
 
 %% Funciones
+
+function [ux,Yx,U,f,c] = comprimir(img, bloqueFil, bloqueCol, cr)
+    [filas,columnas] = size(img);
+    f = filas;
+    c = columnas;
+    X = convertirEnBloques(img, bloqueFil, bloqueCol);
+    Cx = covarianza(X);
+    ux = media(X);
+    [U,D,V] = svd(Cx);
+   
+    % Reduzco las dimensiones
+    U = V(:,1:cr);
+    % Proyecto en la base reducida sin la media
+    Yx = U'*(X-ux);
+end
+
+function imgReconstruida = descomprimir(ux, Yx, U, bloqueFil, bloqueCol,filasImg,columnasImg)
+    X = U*Yx + ux;
+    imgReconstruida = convertirEnImagen(X, bloqueFil , bloqueCol, filasImg, columnasImg);
+    imgReconstruida = cast(imgReconstruida,'uint8');
+end
 
 function img = convertirEnImagen(X, bloqueFil, bloqueCol, imgFil, imgCol)
     
