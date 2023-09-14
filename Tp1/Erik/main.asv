@@ -1,15 +1,15 @@
 close all;
 clear all;
 
-bloqueFil = 7; % 1, 2, 4, 5, 8, 10, 16, 20, 25, 40, 50, 80, 100, 200, 400
-bloqueCol = 7; % 1, 2, 4, 8, 71, 142, 284, 568
+bloqueFil = 8; % 1, 2, 4, 5, 8, 10, 16, 20, 25, 40, 50, 80, 100, 200, 400
+bloqueCol = 8; % 1, 2, 4, 8, 71, 142, 284, 568
 
-img = cast(cargarImg('img_03.jpg'),'uint8');
+img = cast(cargarImg('img_01.jpg'),'uint8');
 
 figure
 imshow(img)
 
-[ux,Yx,U,f,c] = comprimir(img,bloqueFil, bloqueCol, 0.25);
+[ux,Yx,U,f,c] = comprimir(img,bloqueFil, bloqueCol, 0.0639);
 
 imgDescomprimida = descomprimir(ux,Yx,U,bloqueFil,bloqueCol,f,c);
 
@@ -21,11 +21,10 @@ size=f*c;
 b= bloqueFil*bloqueCol;
 k = 0:b/100:b;
 cr = 0:0.01:1;
-[K,CR] = meshgrid(k,cr);
-F = K-((size.*CR-K-4)./(size./K+K));
-figure
-surf(K,CR,F)
-xlabel('Tamanio Bloque'), ylabel('CR'), zlabel('Reduccion de Dimensiones')
+[K,CR] = meshgrid(k,l);
+F = ((K-L).*(size./K+K)+K+4)./size;
+surf(K,RC,F)
+xlabel('Tamanio Bloque'), ylabel('CR'), zlabel('CR')
 %% Funciones
 
 function [ux,Yx,U,f,c] = comprimir(img, bloqueFil, bloqueCol, cr)
