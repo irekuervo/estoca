@@ -90,12 +90,16 @@ FinalRGB3 = RecompRGB64Byts(ReciboRGB3,SizeRGB3,...
 
 figure
 imshow(uint8(ImagenGray3))
+imwrite(cast(ImagenGray3,'uint8'),'gray3.png');
 figure
 imshow(uint8(FinalGray3))
+imwrite(cast(FinalGray3,'uint8'),'final-gray3.png');
 figure
 imshow(uint8(ImagenRGB3))
+imwrite(cast(ImagenRGB3,'uint8'),'rgb3.png');
 figure
 imshow(uint8(FinalRGB3))
+imwrite(cast(FinalRGB3,'uint8'),'final-rgb3.png');
 
 %%
 %%%%%% Ejercicio 3
