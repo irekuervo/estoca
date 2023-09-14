@@ -4,15 +4,15 @@ clear all;
 %% Ejercicio 4-a
 
 img = cargarImg('img_04.jpg');
-
+imwrite(img,'img4.png');
 % Cada uno tiene que ser multiplo del las dimensiones de la imagen
 bloqueFil = 14; 
 bloqueCol = 14; 
 
 mse = [];
-crDesde = 1;
-crHasta = 99;
-paso = 1;
+crDesde = 5;
+crHasta = 95;
+paso = 5;
 
 for cr = crDesde:paso:crHasta
     [ux,Yx, U, f, c] = comprimir(img, bloqueFil, bloqueCol, cr/100);
@@ -23,7 +23,39 @@ end
 cr = linspace(crDesde, crHasta, crHasta/paso);
 
 figure
-plot(cr, mse);
+a=plot(cr, mse);
+title('Variacion del MSE segun el CR para la imagen4')
+xlabel('CR') 
+ylabel('MSE') 
+saveas(a,"mse.png");
+%% Ejercicio 4-b
+
+figure
+imshow(img)
+
+bloqueFil = 14; 
+bloqueCol = 14; 
+
+for cr = 5:5:25
+    [ux,Yx, U, f, c] = comprimir(img, bloqueFil, bloqueCol, cr/100);
+    imgDescomprimida = descomprimir(ux, Yx, U, bloqueFil, bloqueCol, f, c);
+    figure
+    imshow(imgDescomprimida)
+    filename = sprintf('cr_%u.png',cr);
+    imwrite(imgDescomprimida,filename);
+end
+
+bloqueFil = 32; 
+bloqueCol = 23; 
+
+for cr = 5:5:25
+    [ux,Yx, U, f, c] = comprimir(img, bloqueFil, bloqueCol, cr/100);
+    imgDescomprimida = descomprimir(ux, Yx, U, bloqueFil, bloqueCol, f, c);
+    figure
+    imshow(imgDescomprimida)
+    filename = sprintf('cr2_%u.png',cr);
+    imwrite(imgDescomprimida,filename);
+end
 
 %% Tasa de compresion vs Tamanio Bloque
 
@@ -34,9 +66,10 @@ cr = 0:0.01:1;
 [K,CR] = meshgrid(k,cr);
 F = (K-((size.*CR-K-4)./(size./K+K)))/b * 100;
 figure
-surf(K,CR,F)
+a = surf(K,CR,F)
+title('Tasa de compresion vs Tamanio Bloque')
 xlabel('Tamanio Bloque'), ylabel('CR'), zlabel('Reduccion % de Dimensiones')
-
+saveas(a,"dimensiones.png")
 
 %% Funciones
 
