@@ -34,9 +34,9 @@ y = w.*y;
 figure()
 plot(y);
 
-% reproducimos la copia
+% COMO HAGO OVERLAP 50% ??
 Y = repmat(y, tw*1000 , 1);
 figure()
 plot(Y);
-player = audioplayer(Y,samplerate)
+player = audioplayer(Y,samplerate);
 playblocking(player);
