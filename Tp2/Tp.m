@@ -3,6 +3,7 @@ clear all;
 
 %% Ejercicio 2
 
+
 filename = "audio_a.wav";
 
 % Vemos el audio
