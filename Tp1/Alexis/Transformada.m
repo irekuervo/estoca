@@ -3,17 +3,17 @@
 function [Resultado,MatrTrans] = Transformada(Bloque,CR)
 
 %%% Para obtener los bloques ordenados comprimidos lo que se hace primero
-%%% es obterner la esperanza y matriz de covariaza. Lo segondo es
+%%% es obterner la esperanza y matriz de covariaza. Lo segundo es
 %%% descomponer la matriz de covarianza en matriz de autovalores y
 %%% autovectores. De estas matrices nos quedamos con el CR*100 porciento de
-%%% los autovalores y autovectores. Finalente, luego de restartarle la
-%%% esperanza, utilizamos la utilizando una matriz formada por los 
+%%% los autovalores y autovectores. Finalmente, luego de restarle la
+%%% esperanza, utilizamos la matriz formada por los 
 %%% autovectores con los que nos quedamos para transformar los bloques
 %%% ordenados en una matriz con menos componentes.
 
-%%% Devolvemos la matriz transformada y la matriz de transformacion. No
+%%% Devolvemos la matriz transformada y la matriz de transformación. No
 %%% devolvemos la esperanza porque esa se puede calcular previamente fuera
-%%% de la transformacion
+%%% de la transformación
 
 EspeMatr = EsperanzaBloque(Bloque);
 CovMatr = CovBloque(Bloque);

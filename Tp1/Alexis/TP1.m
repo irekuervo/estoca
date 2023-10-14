@@ -1,16 +1,8 @@
-<<<<<<< HEAD:Tp1/Bruno/TP1.m
 %%%%% TP1 Grupo 8
-=======
-close all;
-clear all;
 
-
-%%%%% TP1
->>>>>>> bf5fa1982730e00c443fc0a0983b1d3510b3b523:Tp1/Ej 1,2,3/TP1.m
-
-%%% El primer paso para trabajar es descargar las imagenes, que estan en la 
-%%% carpeta, al programa e inmedianamente transformar el tipo de dato de 
-%%% unite8 a double.
+%%% El primer paso para trabajar es descargar las imágenes, que estan en la 
+%%% carpeta, al programa e inmediatamente transformar el tipo de dato de 
+%%% uint8 a double.
 ImagenRGB1 = double(imread('img_01.jpg'));
 ImagenGray1 = double(rgb2gray(imread('img_01.jpg')));
 ImagenRGB2 = double(imread('img_02.jpg'));
@@ -21,9 +13,9 @@ ImagenRGB4 = double(imread('img_04.jpg'));
 ImagenGray4 = double(rgb2gray(imread('img_04.jpg')));
 
 %%
-%%%%%% Ejercicio 1: Correlaci�n
+%%%%%% Ejercicio 1: Correlación
 
-%%% Aplico las funciones a las imagenes para obtener los bloques ordenados
+%%% Aplico las funciones a las imágenes para obtener los bloques ordenados
 %%% de las Imagenes
 
 [BloqueGray1,TamGray1] = DescomGray2Byts(ImagenGray1);
@@ -32,8 +24,8 @@ ImagenGray4 = double(rgb2gray(imread('img_04.jpg')));
 [BloqueGray2,TamGray2] = DescomGray2Byts(ImagenGray2);
 [BloqueRGB2,TamRGB2] = DescomRGB2Byts(ImagenRGB2);
 
-%%% Genero los graficos de disperion de los vectores que contienen los
-%%% bloues de datos.
+%%% Genero los gráficos de dispersion de los vectores que contienen los
+%%% bloques de datos.
 
 figure()
 plot(BloqueGray1(1,:),BloqueGray1(2,:),'o')
@@ -63,7 +55,7 @@ hold on;
 grid on;
 axis([0 256 0 256])
 
-%%% Calculo los coeficiontes de correlacion de los vectores de dos
+%%% Calculo los coeficiontes de correlación de los vectores de dos
 %%% coordenadas.
 
 CorrGray1 = corrcoef(BloqueGray1(1,:),BloqueGray1(2,:));
@@ -94,22 +86,22 @@ CovRGB3 = CovBloque(BloqueRGB3);
 %%% autovalores y obtengo los bloques transformados y la matriz de
 %%% transformacion
 
-[ProyecsionGray3, MatrProyecGray3] = Transformada(BloqueGray3,0.2);
-[ProyecsionRGB3, MatrProyecRGB3] = Transformada(BloqueRGB3,0.2);
+[ProyeccionGray3, MatrProyecGray3] = Transformada(BloqueGray3,0.2);
+[ProyeccionRGB3, MatrProyecRGB3] = Transformada(BloqueRGB3,0.2);
 
 %%% Antitransformo para obtener los bloques ordenados deformados por la
 %%% falta de informacion al transformar sin algunos atuovectores.
 
-ReciboGray3 = AntiTransformada(ProyecsionGray3,...
+ReciboGray3 = AntiTransformada(ProyeccionGray3,...
     MatrProyecGray3,EspGray3);
-ReciboRGB3 = AntiTransformada(ProyecsionRGB3,...
+ReciboRGB3 = AntiTransformada(ProyeccionRGB3,...
     MatrProyecRGB3,EspRGB3);
 
 SizeGray3 = size(ImagenGray3);
 SizeRGB3 = size(ImagenRGB3);
 
 %%% Recompongo la imagen a partir de los bloques ordenados reconstruidos
-%%% obteniendo una imagen con las dimenciones originales.
+%%% obteniendo una imagen con las dimensiones originales.
 
 FinalGray3 = RecompGray64Byts(ReciboGray3,SizeGray3,...
     FlagGray3Col,FlagGray3Fil);
@@ -129,7 +121,6 @@ ElementosGris = length(EspGray3)+8*8+64*TamBloqueAumGray3(1)*...
 
 figure
 imshow(uint8(ImagenGray3))
-<<<<<<< HEAD:Tp1/Bruno/TP1.m
 title('Imagen 3 en escala de grises original')
 figure
 imshow(uint8(FinalGray3))
@@ -140,18 +131,6 @@ title('Imagen 3 en RGB original')
 figure
 imshow(uint8(FinalRGB3))
 title('Imagen 3 en RGB procesada con PC = 20%')
-=======
-imwrite(cast(ImagenGray3,'uint8'),'gray3.png');
-figure
-imshow(uint8(FinalGray3))
-imwrite(cast(FinalGray3,'uint8'),'final-gray3.png');
-figure
-imshow(uint8(ImagenRGB3))
-imwrite(cast(ImagenRGB3,'uint8'),'rgb3.png');
-figure
-imshow(uint8(FinalRGB3))
-imwrite(cast(FinalRGB3,'uint8'),'final-rgb3.png');
->>>>>>> bf5fa1982730e00c443fc0a0983b1d3510b3b523:Tp1/Ej 1,2,3/TP1.m
 
 %%
 %%%%%% Ejercicio 4
@@ -178,7 +157,7 @@ plot((1:19)*5, EMSRGB4)
 hold on
 grid on
 
-%% E
+%%
 
 for i = 1:5
 

@@ -2,9 +2,9 @@
 
 function Resultado = SolucionRGB(ImagenRGB,i)
 
-%%% En esta funcion lo que se hace es descomponer una imagen en bloques de
+%%% En esta función lo que se hace es descomponer una imagen en bloques de
 %%% 8x8, comprimir estos bloques ordenados quedandonos con un i% de la
-%%% informacion, descomprimir la informacion  finalmente recomponer la
+%%% informacion, descomprimir la información  finalmente recomponer la
 %%% imagen original con informacion faltante. Todo esto trabajando con la
 %%% imagen en RGB
 

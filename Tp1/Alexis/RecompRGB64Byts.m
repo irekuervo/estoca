@@ -3,9 +3,9 @@
 function [Result] = RecompRGB64Byts(BloqueRGB, TamImag, ...
     FlagSizeInadeCol, FlagSizeInadeFil)
 
-%%% Hago el proceso inverso de la funcion de descompocicion. Me paso los
-%%% bloques a una matriz vacia y luego me copio la matriz de las
-%%% dimensiones originales  como resultado.
+%%% Hago el proceso inverso de la función de descomposición. Paso los
+%%% bloques a una matriz vacia y luego copio la matriz de las
+%%% dimensiones originales como resultado.
 
 Result = zeros(TamImag);
 
