@@ -61,4 +61,4 @@ figure()
 plot((1:512)/512*2,mag2db(abs(fft(X,512))))
 
 
-
+%%% HOla
