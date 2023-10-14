@@ -1,42 +1,77 @@
 close all;
 clear all;
 
+% Cada uno tiene que ser multiplo del las dimensiones de la imagen
+bloqueFil = 14; 
+bloqueCol = 14; 
 
-bloqueFil = 8;
-bloqueCol = 8;
-CR = 5;
-
-cantAutovectores = cast(100*CR / (bloqueFil*bloqueCol) ,'int32');
-
-img = cargarImg('img_01.jpg');
-[filas,columnas] = size(img);
+img = cast(cargarImg('img_04.jpg'),'uint8');
 
 figure
-imshow(cast(img,'uint8'))
+imshow(img)
 
-X = convertirEnBloques(img, bloqueFil, bloqueCol);
+[ux,Yx,U,f,c] = comprimir(img,bloqueFil, bloqueCol, 0.1);
 
-Cx = covarianza(X);
-ux = media(X);
-
-[U,D,V] = svd(Cx);
-
-U = V(:,1:cantAutovectores);
-
-Y = U'*(X-ux);
-
-Yx = U*Y + ux;
+imgDescomprimida = descomprimir(ux,Yx,U,bloqueFil,bloqueCol,f,c);
 
 
-%% Pruebas
-
-% Prueba de conversion de bloques: se debe poder reconstruir
-imgReconstruida = convertirEnImagen(Yx, bloqueFil , bloqueCol, filas, columnas);
 
 figure
-imshow(cast(imgReconstruida,'uint8'))
+imshow(imgDescomprimida)
 
+%% Tasa de compresion vs Tamanio Bloque
+size=f*c;
+b= bloqueFil*bloqueCol;
+k = 0:b/100:b;
+cr = 0:0.01:1;
+[K,CR] = meshgrid(k,cr);
+F = (K-((size.*CR-K-4)./(size./K+K)))/b * 100;
+figure
+surf(K,CR,F)
+xlabel('Tamanio Bloque'), ylabel('CR'), zlabel('Reduccion % de Dimensiones')
 %% Funciones
+
+function mse = mse(imgX,imgY)
+    [filas,columnas] = size(imgX);
+    for i = 1:1:filas
+        for j = 1:1:columnas
+            mse = (imgX(i,j)-imgY(i,j))^2
+        end
+    end
+    mse = mse / (filas*columnas);
+end
+
+function [ux,Yx,U,f,c] = comprimir(img, bloqueFil, bloqueCol, cr)
+    [filas,columnas] = size(img);
+    f = filas;
+    c = columnas;
+    X = convertirEnBloques(img, bloqueFil, bloqueCol);
+    Cx = covarianza(X);
+    ux = media(X);
+    [U,D,V] = svd(Cx);
+    
+    % Reduzco las dimensiones
+    lambda = cantidadAutovectores(bloqueFil,bloqueCol,filas,columnas,cr);
+    U = V(:,1:lambda);
+    % Proyecto en la base reducida restando la media
+    Yx = U'*(X-ux);
+end
+
+function lambda = cantidadAutovectores(bloqueFil, bloqueCol, filas, columnas, cr)
+    k = bloqueFil*bloqueCol;
+    d = filas*columnas;
+    l = k - (d*cr-k-4)/(d/k + k);
+    lambda = int32(round(k - l));
+end
+
+function imgReconstruida = descomprimir(ux, Yx, U, bloqueFil, bloqueCol,filasImg,columnasImg)
+    % Vuelva al espacio original haciendo la inversa y sumando la media
+    X = U*Yx + ux;
+    % Paso de vectores a la imagen
+    imgReconstruida = convertirEnImagen(X, bloqueFil , bloqueCol, filasImg, columnasImg);
+    % Casteo para poder tener una escala de grises real
+    imgReconstruida = cast(imgReconstruida,'uint8');
+end
 
 function img = convertirEnImagen(X, bloqueFil, bloqueCol, imgFil, imgCol)
     
