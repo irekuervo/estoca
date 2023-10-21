@@ -24,9 +24,14 @@ filter_coefs = [filter_coefs -1*LPC'];
 e = filter(filter_coefs, 1, Xs);
 
 eCorr = CorrelacionInsesgada(e);
-[numRows,numCols] = size(eCorr);
 pitch_indexes = find(eCorr > alfa, 1,'last');
-pitchIndex = pitch_indexes(1);
-pitchMagnitud = eCorr(pitchIndex);
+
+if isempty(pitch_indexes)
+    pitchIndex = 0;
+    pitchMagnitud = 0;
+else
+    pitchIndex = pitch_indexes(1);
+    pitchMagnitud = eCorr(pitchIndex);
+end
 
 end

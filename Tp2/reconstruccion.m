@@ -1,5 +1,5 @@
 
-%% dim matrizCoef = PxN , dim vectorGanancias = dim vectorPitch 1xN
+%% dim matrizCoef = PxN , dim vectorGanancias = dim vectorPitch Nx1 (columna)
 function [audio] = reconstruccion(matrizCoef, vectorGanancias, vectorPitch, samplerate, tamanioVentana)
 
 [n,p] = size(matrizCoef);
@@ -25,13 +25,15 @@ for i = 1:n
     
     entrada = [];
     
-    esConsonante = pitch == 0
+    esConsonante = pitch == 0;
     if(esConsonante)
         entrada = normrnd(0,1,tamanioVentana);
+    else
+        entrada = trenImpulsos(samplerate, pitch);
     end
     
     s_reconstruido = filter(coefs_denominador, G, entrada);
-
+    
 
 
 %%  -si el f_pitch es > 0 es vocal, sino es consonante
