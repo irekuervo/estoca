@@ -62,16 +62,25 @@ plot((1:512)/512*2,mag2db(abs(fft(X,512))))
 
 %%
 close all
-
+p = 5;
+alfa = 0.005;
 [y,samplerate] = audioread(filename);
 MatrizAudio = Segmentacion(y,nw);
+SizeMatriz = size(MatrizAudio);
+VectorAk = zeros(p,SizeMatriz(2));
+VectorGanancia = zeros(SizeMatriz(2),1);
+VectorPitch = zeros(SizeMatriz(2),1);
 
-
+for i = 1:SizeMatriz(2)
+    [coefs, G, pitchIndex, pitchMagnitud] = pitch_lpc(y, p , alfa);
+    VectorAk(:,i) = coefs;
+    VectorGanancia(i) = G;
+    VectorPitch(i) = pitchIndex;
+end
 %%% HOla
 
 %% Erik
 close all
-p = 5;
 alfa = 0.005;
 [coefs, G, pitchIndex, pitchMagnitud] = pitch_lpc(y, p , alfa);
 pitch = samplerate/pitchIndex;
