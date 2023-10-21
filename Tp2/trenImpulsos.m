@@ -1,7 +1,8 @@
-function [outputArg1,outputArg2] = trenImpulsos(inputArg1,inputArg2)
-%TRENIMPULSOS Summary of this function goes here
-%   Detailed explanation goes here
-outputArg1 = inputArg1;
-outputArg2 = inputArg2;
+function trenImpulsos = trenImpulsos(samplerate, frecuencia, tamanio)
+     % Calcula el periodo de la señal en muestras
+    periodo = samplerate / frecuencia;
+    
+    % Genera el tren de impulsos
+    trenImpulsos = zeros(1, tamanio);
+    trenImpulsos(mod(1:tamanio, periodo) == 0) = 1;
 end
-

@@ -41,3 +41,15 @@ figure()
 plot(Y);
 player = audioplayer(Y,samplerate);
 playblocking(player);
+
+%% pitch
+close all
+p = 5;
+alfa = 0.005;
+[coefs, G, pitchIndex, pitchMagnitud] = pitch_lpc(y, p , alfa);
+pitch = samplerate/pitchIndex;
+
+%%Tren
+tren = trenImpulsos(samplerate,pitch,nw);
+figure()
+plot(tren);

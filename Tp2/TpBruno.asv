@@ -77,4 +77,15 @@ for i = 1:SizeMatriz(2)
     VectorGanancia(i) = G;
     VectorPitch(i) = pitchIndex;
 end
+%%% HOla
 
+a = 3;
+
+%% Pruebas Erik
+close all
+alfa = 0.005;
+[coefs, G, pitchIndex, pitchMagnitud] = pitch_lpc(y, p , alfa);
+pitch = samplerate/pitchIndex;
+
+
+trenImpulsos(sa
