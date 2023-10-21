@@ -62,3 +62,11 @@ plot((1:512)/512*2,mag2db(abs(fft(X,512))))
 
 
 %%% HOla
+
+%% Erik
+close all
+p = 5;
+alfa = 0.005;
+[coefs, G, pitchIndex, pitchMagnitud] = pitch_lpc(y, p , alfa);
+pitch = samplerate/pitchIndex;
+
