@@ -18,7 +18,7 @@ for i = 1:n
 
     LPC = matrizCoef(:,i);
     pitch = vectorPitch(1, i);
-    G = vectorGanancias(1, G);
+    G = vectorGanancias(1, i);
     
     coefs_denominador = [1];
     coefs_denominador = [coefs_denominador -1*LPC'];
@@ -27,7 +27,7 @@ for i = 1:n
     
     esConsonante = pitch == 0;
     if(esConsonante)
-        entrada = normrnd(0,1, tamanioVentana);
+        entrada = normrnd(0,1, tamanioVentana, 1);
     else
         entrada = trenImpulsos(samplerate, pitch, tamanioVentana);
     end

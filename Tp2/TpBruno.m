@@ -71,6 +71,7 @@ SizeMatriz = size(MatrizAudio);
 VectorAk = zeros(p,SizeMatriz(2));
 VectorGanancia = zeros(SizeMatriz(2),1);
 VectorPitch = zeros(SizeMatriz(2),1);
+VectorMagnitudes = zeros(SizeMatriz(2),1);
 
 for i = 1:SizeMatriz(2)
     [coefs, G, pitchIndex, pitchMagnitud] = ...
@@ -78,5 +79,11 @@ for i = 1:SizeMatriz(2)
     VectorAk(:,i) = coefs;
     VectorGanancia(i) = G;
     VectorPitch(i) = pitchIndex;
+    VectorMagnitudes(i) = pitchMagnitud;
 end
+
+% minimo de los maximos del pitch (FALTA FILTRAR SOLO LOS QUE NO SON 0)
+alfaMin = min(VectorMagnitudes);
+
+%audio = reconstruccion(VectorAk, VectorGanancia,VectorPitch,samplerate,SizeMatriz(1));
 
