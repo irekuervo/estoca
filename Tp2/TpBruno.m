@@ -60,6 +60,12 @@ X = CorrelacionInsesgada(y);
 figure()
 plot((1:512)/512*2,mag2db(abs(fft(X,512))))
 
+%%
+close all
+
+[y,samplerate] = audioread(filename);
+MatrizAudio = Segmentacion(y,nw);
+
 
 %%% HOla
 
