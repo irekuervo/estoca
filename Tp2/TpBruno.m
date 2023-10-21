@@ -67,12 +67,14 @@ alfa = 0.005;
 [y,samplerate] = audioread(filename);
 MatrizAudio = Segmentacion(y,nw);
 SizeMatriz = size(MatrizAudio);
+
 VectorAk = zeros(p,SizeMatriz(2));
 VectorGanancia = zeros(SizeMatriz(2),1);
 VectorPitch = zeros(SizeMatriz(2),1);
 
 for i = 1:SizeMatriz(2)
-    [coefs, G, pitchIndex, pitchMagnitud] = pitch_lpc(y, p , alfa);
+    [coefs, G, pitchIndex, pitchMagnitud] = ...
+        pitch_lpc(MatrizAudio(:,i), p , alfa);
     VectorAk(:,i) = coefs;
     VectorGanancia(i) = G;
     VectorPitch(i) = pitchIndex;
