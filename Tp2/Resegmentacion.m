@@ -1,26 +1,27 @@
 function [audio] = Resegmentacion(matriz_ventanas)
 
-audio = [];
+
 
 [muestras_ventana,cantidad_ventanas] = size(matriz_ventanas);
 
-tamanio_union = muestras_ventana/2;
-tamanio = tamanio_union * 3; % por 50% de solapamiento
-
+tamanio_union = muestras_ventana / 2; %por 50% de solapamiento
+audio = zeros(1 ,tamanio_union);
+indice_solapamiento = 0;
+for i = 1:cantidad_ventanas
     
-for i = 1:2:cantidad_ventanas-1
-    ventana_1 = [matriz_ventanas(:,i); zeros(tamanio_union, 1)];
-    ventana_2 = [zeros(tamanio_union, 1); matriz_ventanas(:,i+1)];
-    
-    union_ventanas  = zeros(tamanio, 1);
+    % vamos construyendo el audio rellenando con ceros donde intersecta con la ventana
+    audio = [audio zeros(1, tamanio_union)];
+    ventana = matriz_ventanas(:,i);
     
     % solapamos
-    for j = i:tamanio
-        union_ventanas(j) = ventana_1(j) + ventana_2(j);
+    for j = i:muestras_ventana
+       indice_audio = indice_solapamiento + j;
+       audio(indice_audio) = audio(indice_audio) + ventana(j);
     end
     
-    audio = [audio union_ventanas'];
+    indice_solapamiento = indice_solapamiento + tamanio_union;
 end
-
+audio = flip(audio);
+audio = audio/(30*rms(audio));
 end
 
