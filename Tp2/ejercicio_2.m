@@ -1,4 +1,4 @@
-%% Ejercicio 2
+% Ejercicio 2
 close all;
 clear all;
 
@@ -31,8 +31,18 @@ for audio_i = 1:3
     % Ventaneamos
     segmento = audio(x0 : x1 - 1);
     ventana = hamming(x1-x0).*segmento;
+    
+    % Graficamos
     figure()
-    plot(ventana);
+    grid on;
+    xt = x0: 1 : (x1-1); % eje de muestras
+    xt_milis = (xt./samplerate).*1000; % eje de tiempo en milisegundos
+    plot(xt_milis, ventana);
+    titulo = strcat("Audio ventaneado de ", filename);
+    title(titulo, 'Interpreter', 'none') % para que imprima bien el nombre del archivo
+    xlim([xt_milis(1) xt_milis(end)])
+    xlabel('t (ms)') 
+    ylabel('Amplitud') 
     
     % Para la ventana, hacemos un LPC para cada P
     for p_i = 1:3
@@ -43,29 +53,27 @@ for audio_i = 1:3
 
         % Peridograma
         graf = PeriodogramaDEP(LPC,G);
-
-        figure()
-        plot(graf)
-        hold on
-        
-        % BRUNO: me ayudas a superponerlos el psd y el peridograma?
         
         % PSD
         X = CorrelacionInsesgada(ventana);
         psd = abs(fft(X,1000));
+        
+        % ---------------------------------------------------------------
+        % TODO: superponer ambos graficos, y estimacion de autocorrelación
+        % ---------------------------------------------------------------
+        
+        figure()
+        plot(graf)
+        hold on
         plot(mag2db(psd));
+        titulo = strcat("Periodograma y PSD de ", filename, ", P=", num2str(P));
+        title(titulo, 'Interpreter', 'none')
+        grid on;
+        xlim([xt_milis(1) xt_milis(end)])
+        xlabel('Muestras') 
+        ylabel('Amplitud (dbm)') 
         hold off
+        
     end
 end
-
-
-%% Ejercicio 3
-close all;
-clear all;
-
-
-
-%% Ejercicio 4
-close all;
-clear all;
 
