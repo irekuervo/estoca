@@ -7,7 +7,7 @@ P_vect = [5 10 30];
 tiempo_ventana = 30e-3;
 
 % Recorremos todos los audios
-for audio_i = 1:3
+for audio_i = 1:4
     
     % Abrimos el audio
     filename = audios(audio_i);

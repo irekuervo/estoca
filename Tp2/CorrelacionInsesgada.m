@@ -6,7 +6,10 @@ for i = 1:N
         for j = i:N-1
             acum = acum+XVector(j)*XVector(j-i+1);
         end
-   Resultado(i) = acum/(N-i+1);
+   % Insesgado
+   %Resultado(i) = acum/(N-i+1);
+   % Sesgado
+   Resultado(i) = acum/(N+1);
 end
 
 end
