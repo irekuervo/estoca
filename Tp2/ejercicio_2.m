@@ -2,7 +2,7 @@
 close all;
 clear all;
 
-audios = ["audio_a.wav" "audio_e.wav" "audio_s.wav"];
+audios = ["audio_a.wav" "audio_e.wav" "audio_s.wav" "audio_sh.wav"];
 P_vect = [5 10 30];
 tiempo_ventana = 30e-3;
 
