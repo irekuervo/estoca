@@ -22,11 +22,11 @@ for audio_i = 1:3
     grid on;
     
     % Calculamos el tamaño de la ventana segun el samplerate
-    tamanio_ventana = samplerate*tiempo_ventana; 
+    muestras_ventana = samplerate*tiempo_ventana; 
     
     % Calculamos los indices desde el centro del audio
-    x0 = (totalSamples / 2) - (tamanio_ventana / 2); 
-    x1 = x0 + tamanio_ventana;
+    x0 = (totalSamples / 2) - (muestras_ventana / 2); 
+    x1 = x0 + muestras_ventana;
     
     % Ventaneamos
     segmento = audio(x0 : x1 - 1);
@@ -58,9 +58,9 @@ for audio_i = 1:3
         X = CorrelacionInsesgada(ventana);
         psd = abs(fft(X,1000));
         
-        % ---------------------------------------------------------------
-        % TODO: superponer ambos graficos, y estimacion de autocorrelación
-        % ---------------------------------------------------------------
+% -------------------------------------------------------------------------
+% TODO: superponer ambos graficos, y estimacion de autocorrelación xcorr(x)
+% -------------------------------------------------------------------------
         
         figure()
         plot(graf)

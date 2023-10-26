@@ -18,4 +18,9 @@ LPC = MatrizCorrelacion^(-1)*VectorCorrelacion(2:P+1);
 
 G = sqrt(VectorCorrelacion(1) - LPC'*VectorCorrelacion(2:P+1));
 
+if isreal(G) == 0
+    %msgbox("La ganancia dio compleja");
+    return;
+end
+
 end

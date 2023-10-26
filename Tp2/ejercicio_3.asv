@@ -1,0 +1,33 @@
+% Ejercicio 3
+close all;
+clear all;
+
+% Parametros
+tiempo_ventana = 30e-3;
+P = 5;
+alfa = 0.005; % nivel de deteccion de pitch
+
+%% vocal-audio_a.wav
+
+[audio,samplerate] = audioread("audio_a.wav");
+
+muestras_ventana = samplerate*tiempo_ventana; 
+
+% Armamos una matriz con todas las ventanas como columnas
+matriz_ventanas = Segmentacion(audio,muestras_ventana);
+
+[muestras_ventana,cantidad_ventanas] = size(matriz_ventanas);
+
+matriz_reconstruida = zeros(muestras_ventana, cantidad_ventanas);
+
+% Por cada ventana hacemos LPC, reconstruimos y guardamos en una matriz
+for i = 1:cantidad_ventanas
+    ventana = matriz_ventanas(:,i);
+    [LPC, G, pitchIndex, pitchMagnitud] = pitch_lpc(ventana, P , alfa);
+    
+end
+
+% minimo de los maximos del pitch (FALTA FILTRAR SOLO LOS QUE NO SON 0)
+alfaMin = min(VectorMagnitudes);
+
+%audio = reconstruccion(VectorAk, VectorGanancia,VectorPitch,samplerate,SizeMatriz(1));
