@@ -1,4 +1,4 @@
-function Resultado = CorrelacionInsesgada(XVector)
+function Resultado = Correlacion(XVector)
 N = length(XVector);
 Resultado = zeros(N,1);
 for i = 1:N

@@ -1,4 +1,4 @@
-function trenImpulsos = trenImpulsos(samplerate, frecuencia, tamanio)
+function trenImpulsos = TrenImpulsos(samplerate, frecuencia, tamanio)
      % Calcula el periodo de la señal en muestras
     muestras_periodo = samplerate / frecuencia;
     

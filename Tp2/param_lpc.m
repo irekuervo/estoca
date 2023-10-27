@@ -1,8 +1,6 @@
 function [LPC, G] = param_lpc(Xs,P)
 
-VectorCorrelacion = CorrelacionInsesgada(Xs);
-
-Simetria = linspace(P,1,P);
+VectorCorrelacion = Correlacion(Xs);
 
 r =  VectorCorrelacion(1:P);
 r_espejado = [flip(r); r(2:end)];

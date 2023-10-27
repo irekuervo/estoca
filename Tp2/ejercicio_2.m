@@ -21,7 +21,7 @@ for audio_i = 1:4
     title(filename, 'Interpreter', 'none')
     grid on;
     
-    % Calculamos el tamaño de la ventana segun el samplerate
+    % Calculamos el tamanio de la ventana segun el samplerate
     muestras_ventana = samplerate*tiempo_ventana; 
     
     % Calculamos los indices desde el centro del audio
@@ -55,7 +55,7 @@ for audio_i = 1:4
         graf = PeriodogramaDEP(LPC,G);
         
         % PSD
-        X = CorrelacionInsesgada(ventana);
+        X = Correlacion(ventana);
         psd = abs(fft(X,1000));
         
 % -------------------------------------------------------------------------

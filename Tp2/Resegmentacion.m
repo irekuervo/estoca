@@ -20,7 +20,9 @@ for i = 1:cantidad_ventanas
     end
     indice = indice + tamanio_union;
 end
-%audio = flip(audio);
+
+% Atenuamos
 audio = audio/(30*rms(audio));
+
 end
 

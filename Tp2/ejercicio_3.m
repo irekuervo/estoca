@@ -6,8 +6,8 @@ clear all;
 
 % Parametros
 tiempo_ventana = 30e-3;
-P = 20;
-pitch = 600; %Hz
+P = 5;
+pitch = 200; %Hz
 
 % Abrimos el audio
 [audio,samplerate] = audioread("audio_a.wav");
@@ -40,13 +40,9 @@ for i = 1:cantidad_ventanas
     % para armar el filtro
     coefs_denominador = [1 -LPC'];
     % como es vocal, usamos un tren de deltas
-    entrada = trenImpulsos(samplerate, pitch, muestras_ventana); 
+    entrada = TrenImpulsos(samplerate, pitch, muestras_ventana); 
     % generamos la ventana
     ventana_reconstruida = filter(G, coefs_denominador, entrada);
-    
-     if isreal(ventana_reconstruida) == 0
-        G = 1;
-     end
     
     matriz_reconstruida(:,i) = ventana_reconstruida';
 end
