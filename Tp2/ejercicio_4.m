@@ -1,17 +1,21 @@
 % Ejercicio 4
 
-% Parametros
+% Ejecutar cada audio como bloque
+
+ESCUCHAR_AUDIOS = 0; % 0 == no, sino si
+
 tiempo_ventana = 50e-3;
 P = 30;
 
 %% audio_01
 close all;
 
-alfa = 0.09;
+alfa = 0.9;
 
 [audio, audio_regenerado, samplerate, reCorrs] = LPC("audio_01.wav", tiempo_ventana, P, alfa);
 
 muestras = size(audio);
+muestrasVentana = size(reCorrs);
 
 % Graficamos normalizado en energia
 graf = figure;
@@ -28,8 +32,9 @@ saveas(graf,"ej4_1_1.png")
 
 % Vemos los residuos para calibrar el alfa
 graf = figure;
-x = 1: samplerate / muestras(1);
-plot( reCorrs);
+x = linspace(1, samplerate / (2*pi), muestrasVentana(1));
+plot(x, reCorrs);
+xlim([x(1) x(end)])
 grid on;
 title('Autocorrelaciónes del residuo de la ventana')
 xlabel('Frecuencia (Hz)'), ylabel('Amplitud normalizada')
@@ -37,7 +42,9 @@ saveas(graf,"ej4_1_2.png")
 
 % Reproducimos el audio regenerado
 player = audioplayer(audio_regenerado, samplerate);
-playblocking(player);
+if ESCUCHAR_AUDIOS ~= 0
+    playblocking(player);
+end
 
 %% audio_02
 close all;
@@ -63,8 +70,9 @@ saveas(graf,"ej4_2_1.png")
 
 % Vemos los residuos para calibrar el alfa
 graf = figure;
-x = 1: samplerate / muestras(1);
-plot( reCorrs);
+x = linspace(1, samplerate / (2*pi), muestrasVentana(1));
+plot(x, reCorrs);
+xlim([x(1) x(end)])
 grid on;
 title('Autocorrelaciónes del residuo de la ventana')
 xlabel('Frecuencia (Hz)'), ylabel('Amplitud normalizada')
@@ -72,7 +80,9 @@ saveas(graf,"ej4_2_2.png")
 
 % Reproducimos el audio regenerado
 player = audioplayer(audio_regenerado, samplerate);
-playblocking(player);
+if ESCUCHAR_AUDIOS ~= 0
+    playblocking(player);
+end
 
 %% audio_03
 close all;
@@ -98,8 +108,9 @@ saveas(graf,"ej4_3_1.png")
 
 % Vemos los residuos para calibrar el alfa
 graf = figure;
-x = 1: samplerate / muestras(1);
-plot( reCorrs);
+x = linspace(1, samplerate / (2*pi), muestrasVentana(1));
+plot(x, reCorrs);
+xlim([x(1) x(end)])
 grid on;
 title('Autocorrelaciónes del residuo de la ventana')
 xlabel('Frecuencia (Hz)'), ylabel('Amplitud normalizada')
@@ -107,7 +118,9 @@ saveas(graf,"ej4_3_2.png")
 
 % Reproducimos el audio regenerado
 player = audioplayer(audio_regenerado, samplerate);
-playblocking(player);
+if ESCUCHAR_AUDIOS ~= 0
+    playblocking(player);
+end
 
 
 %% audio_04
@@ -134,8 +147,9 @@ saveas(graf,"ej4_4_1.png")
 
 % Vemos los residuos para calibrar el alfa
 graf = figure;
-x = 1: samplerate / muestras(1);
-plot(reCorrs);
+x = linspace(1, samplerate / (2*pi), muestrasVentana(1));
+plot(x, reCorrs);
+xlim([x(1) x(end)])
 grid on;
 title('Autocorrelaciónes del residuo de la ventana')
 xlabel('Frecuencia (Hz)'), ylabel('Amplitud normalizada')
@@ -143,4 +157,6 @@ saveas(graf,"ej4_4_2.png")
 
 % Reproducimos el audio regenerado
 player = audioplayer(audio_regenerado, samplerate);
-playblocking(player);
+if ESCUCHAR_AUDIOS ~= 0
+    playblocking(player);
+end
