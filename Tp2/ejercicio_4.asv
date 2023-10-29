@@ -1,0 +1,21 @@
+% Ejercicio 4
+close all;
+clear all;
+
+% Parametros
+tiempo_ventana = 20e-3;
+P = 50;
+alfa = 0.2;
+
+[audio, audio_regenerado, samplerate, rCorrs, reCorrs] = LPC("audio_01.wav", tiempo_ventana, P, alfa);
+
+e
+
+
+% Atenuamos
+audio_regenerado = audio_regenerado/(10*rms(audio_regenerado));
+
+% Escuchamos
+player = audioplayer(audio_regenerado,samplerate);
+playblocking(player);
+audiowrite('audio_ej4.wav',audio_regenerado,samplerate)

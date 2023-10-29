@@ -1,55 +1,101 @@
 % Ejercicio 4
-close all;
-clear all;
 
 % Parametros
 tiempo_ventana = 30e-3;
 P = 50;
-alfa = 4.5e-5;
 
-% Abrimos el audio
-[audio,samplerate] = audioread('audio_01.wav');
-player = audioplayer(audio,samplerate);
+%% audio_01
+close all;
 
-muestras_ventana = samplerate*tiempo_ventana; 
+% Parametros
+tiempo_ventana = 50e-3;
+P = 50;
+alfa = 0.07;
 
-% Armamos una matriz con todas las ventanas como columnas
-matriz_ventanas = Segmentacion(audio,muestras_ventana);
+[audio, audio_regenerado, samplerate, reCorrs] = LPC("audio_01.wav", tiempo_ventana, P, alfa);
 
-[muestras_ventana,cantidad_ventanas] = size(matriz_ventanas);
+figure
+plot(reCorrs);
 
-matriz_reconstruida = zeros(muestras_ventana, cantidad_ventanas);
+audio_regenerado = audio_regenerado./max(audio_regenerado)./1.4;
+audio = audio./max(audio)./1.4;
 
-ecors = zeros(muestras_ventana,cantidad_ventanas);
-pitches = [];
+figure
+plot(audio)
+hold on
+plot(audio_regenerado)
 
-
-% Por cada ventana hacemos LPC, reconstruimos y guardamos en una matriz
-for i = 1:cantidad_ventanas
-    
-    ventana = matriz_ventanas(:,i);
-    
-    [LPC, G] = param_lpc(ventana, P);
-    
-    [pitch, rCorr] = pitch_lpc(ventana, LPC, alfa, samplerate);
-    
-    entrada = [];
-    esConsonante = pitch == 0;
-    if(esConsonante)
-        entrada = normrnd(0,1, muestras_ventana, 1);
-    else
-        entrada = TrenImpulsos(samplerate, pitch, muestras_ventana);
-    end
-        
-    ventana_reconstruida = filter(G, [1 -LPC'], entrada);
-    
-    matriz_reconstruida(:,i) = ventana_reconstruida';
-end
-
-% Resegmentamos las ventanas y armamos el audio
-audio_regenerado = Resegmentacion(matriz_reconstruida);
-
-% Escuchamos
 player = audioplayer(audio_regenerado,samplerate);
 playblocking(player);
-audiowrite('audio_ej4.wav',audio_regenerado,samplerate)
+
+%% audio_02
+close all;
+
+% Parametros
+tiempo_ventana = 50e-3;
+P = 50;
+alfa = 0.07;
+
+[audio, audio_regenerado, samplerate, reCorrs] = LPC("audio_02.wav", tiempo_ventana, P, alfa);
+
+figure
+plot(reCorrs);
+
+audio_regenerado = audio_regenerado./max(audio_regenerado)./1.4;
+audio = audio./max(audio)./1.4;
+
+figure
+plot(audio)
+hold on
+plot(audio_regenerado)
+
+player = audioplayer(audio_regenerado,samplerate);
+playblocking(player);
+
+%% audio_03
+close all;
+
+% Parametros
+tiempo_ventana = 50e-3;
+P = 50;
+alfa = 0.05;
+
+[audio, audio_regenerado, samplerate, reCorrs] = LPC("audio_02.wav", tiempo_ventana, P, alfa);
+
+figure
+plot(reCorrs);
+
+audio_regenerado = audio_regenerado./max(audio_regenerado)./1.4;
+audio = audio./max(audio)./1.4;
+
+figure
+plot(audio)
+hold on
+plot(audio_regenerado)
+
+player = audioplayer(audio_regenerado,samplerate);
+playblocking(player);
+
+%% audio_04
+close all;
+
+% Parametros
+tiempo_ventana = 50e-3;
+P = 50;
+alfa = 0.05;
+
+[audio, audio_regenerado, samplerate, reCorrs] = LPC("audio_02.wav", tiempo_ventana, P, alfa);
+
+figure
+plot(reCorrs);
+
+audio_regenerado = audio_regenerado./max(audio_regenerado)./1.4;
+audio = audio./max(audio)./1.4;
+
+figure
+plot(audio)
+hold on
+plot(audio_regenerado)
+
+player = audioplayer(audio_regenerado,samplerate);
+playblocking(player);
