@@ -1,21 +1,96 @@
 % Ejercicio 4
+
+%% audio_01
 close all;
-clear all;
 
 % Parametros
-tiempo_ventana = 20e-3;
+tiempo_ventana = 50e-3;
 P = 50;
-alfa = 0.2;
+alfa = 0.09;
 
-[audio, audio_regenerado, samplerate, rCorrs, reCorrs] = LPC("audio_01.wav", tiempo_ventana, P, alfa);
+[audio, audio_regenerado, samplerate, reCorrs] = LPC("audio_01.wav", tiempo_ventana, P, alfa);
 
-e
+% Vemos los residuo
+figure
+plot(reCorrs);
 
+% Graficamos normalizado
+figure
+plot(audio./max(audio))
+hold on
+plot(audio_regenerado./max(audio_regenerado))
 
-% Atenuamos
-audio_regenerado = audio_regenerado/(10*rms(audio_regenerado));
+player = audioplayer(audio_regenerado, samplerate);
+playblocking(player);
 
-% Escuchamos
+%% audio_02
+close all;
+
+% Parametros
+tiempo_ventana = 50e-3;
+P = 50;
+alfa = 0.07;
+
+[audio, audio_regenerado, samplerate, reCorrs] = LPC("audio_02.wav", tiempo_ventana, P, alfa);
+
+figure
+plot(reCorrs);
+
+audio_regenerado = audio_regenerado./max(audio_regenerado)./1.4;
+audio = audio./max(audio)./1.4;
+
+figure
+plot(audio)
+hold on
+plot(audio_regenerado)
+
 player = audioplayer(audio_regenerado,samplerate);
 playblocking(player);
-audiowrite('audio_ej4.wav',audio_regenerado,samplerate)
+
+%% audio_03
+close all;
+
+% Parametros
+tiempo_ventana = 50e-3;
+P = 50;
+alfa = 0.1;
+
+[audio, audio_regenerado, samplerate, reCorrs] = LPC("audio_03.wav", tiempo_ventana, P, alfa);
+
+figure
+plot(reCorrs);
+
+%audio_regenerado = audio_regenerado./max(audio_regenerado)./1.4;
+%audio = audio./max(audio)./1.4;
+
+figure
+plot(audio)
+hold on
+plot(audio_regenerado)
+
+player = audioplayer(audio_regenerado,samplerate);
+playblocking(player);
+
+%% audio_04
+close all;
+
+% Parametros
+tiempo_ventana = 50e-3;
+P = 50;
+alfa = 0.05;
+
+[audio, audio_regenerado, samplerate, reCorrs] = LPC("audio_04.wav", tiempo_ventana, P, alfa);
+
+figure
+plot(reCorrs);
+
+audio_regenerado = audio_regenerado./max(audio_regenerado)./1.4;
+audio = audio./max(audio)./1.4;
+
+figure
+plot(audio)
+hold on
+plot(audio_regenerado)
+
+player = audioplayer(audio_regenerado,samplerate);
+playblocking(player);
