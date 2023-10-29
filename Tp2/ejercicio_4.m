@@ -31,34 +31,17 @@ for i = 1:cantidad_ventanas
     
     [LPC, G] = param_lpc(ventana, P);
     
-    %% buscamos el pitch
-
-    filter_coefs = [1 -1*LPC'];
-    e = filter(filter_coefs,1, ventana);
-    eCorr = Correlacion(e);
-    ecors(:,i)= eCorr;
-   
-    pitch_indexes = find(eCorr(10:end) > alfa, 1,'last');
-    pitchIndex=0;
-    if ~isempty(pitch_indexes)
-        pitchIndex = pitch_indexes(1);
-    end
+    [pitch, rCorr] = pitch_lpc(ventana, LPC, alfa, samplerate);
     
     entrada = [];
-    esConsonante = pitchIndex == 0;
+    esConsonante = pitch == 0;
     if(esConsonante)
         entrada = normrnd(0,1, muestras_ventana, 1);
     else
-        pitch = samplerate/pitchIndex;
-        pitches = [pitches pitch];
         entrada = TrenImpulsos(samplerate, pitch, muestras_ventana);
     end
         
-    % para armar el filtro
-    coefs_denominador = [1 -LPC']; 
-    
-    % generamos la ventana
-    ventana_reconstruida = filter(G, coefs_denominador, entrada);
+    ventana_reconstruida = filter(G, [1 -LPC'], entrada);
     
     matriz_reconstruida(:,i) = ventana_reconstruida';
 end
