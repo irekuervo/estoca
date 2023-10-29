@@ -1,10 +1,10 @@
-function Resultado = PeriodogramaDEP(LPC,G)
+function Resultado = PSDAnalitico(LPC,G,N)
 
-Resultado = zeros(1000,1);
-W =  linspace(0,pi,1000);
+Resultado = zeros(N,1);
+W =  linspace(0,pi,N);
 VectorK = 1:length(LPC);
 
-for i = 1:1000
+for i = 1:N
     VectorTransformador = exp(-j*W(i)*VectorK);
     Resultado(i) = (G/(abs(1-VectorTransformador*LPC)))^2;
 end
