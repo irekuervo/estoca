@@ -2,7 +2,7 @@
 
 % Ejecutar cada audio como bloque
 
-ESCUCHAR_AUDIOS = 0; % 0 == no, sino si
+ESCUCHAR_AUDIOS = 0; % 0 == no, 1 == si
 
 tiempo_ventana = 50e-3;
 P = 30;
@@ -10,7 +10,7 @@ P = 30;
 %% audio_01
 close all;
 
-alfa = 0.9;
+alfa = 0.1;
 
 [audio, audio_regenerado, samplerate, reCorrs] = LPC("audio_01.wav", tiempo_ventana, P, alfa);
 
@@ -32,12 +32,10 @@ saveas(graf,"ej4_1_1.png")
 
 % Vemos los residuos para calibrar el alfa
 graf = figure;
-x = linspace(1, samplerate / (2*pi), muestrasVentana(1));
-plot(x, reCorrs);
-xlim([x(1) x(end)])
+plot(reCorrs);
 grid on;
 title('Autocorrelaciónes del residuo de la ventana')
-xlabel('Frecuencia (Hz)'), ylabel('Amplitud normalizada')
+xlabel('k'), ylabel('Amplitud normalizada')
 saveas(graf,"ej4_1_2.png")
 
 % Reproducimos el audio regenerado
@@ -70,12 +68,10 @@ saveas(graf,"ej4_2_1.png")
 
 % Vemos los residuos para calibrar el alfa
 graf = figure;
-x = linspace(1, samplerate / (2*pi), muestrasVentana(1));
-plot(x, reCorrs);
-xlim([x(1) x(end)])
+plot(reCorrs);
 grid on;
 title('Autocorrelaciónes del residuo de la ventana')
-xlabel('Frecuencia (Hz)'), ylabel('Amplitud normalizada')
+xlabel('k'), ylabel('Amplitud normalizada')
 saveas(graf,"ej4_2_2.png")
 
 % Reproducimos el audio regenerado
@@ -108,12 +104,10 @@ saveas(graf,"ej4_3_1.png")
 
 % Vemos los residuos para calibrar el alfa
 graf = figure;
-x = linspace(1, samplerate / (2*pi), muestrasVentana(1));
-plot(x, reCorrs);
-xlim([x(1) x(end)])
+plot(reCorrs);
 grid on;
 title('Autocorrelaciónes del residuo de la ventana')
-xlabel('Frecuencia (Hz)'), ylabel('Amplitud normalizada')
+xlabel('k'), ylabel('Amplitud normalizada')
 saveas(graf,"ej4_3_2.png")
 
 % Reproducimos el audio regenerado
@@ -147,12 +141,10 @@ saveas(graf,"ej4_4_1.png")
 
 % Vemos los residuos para calibrar el alfa
 graf = figure;
-x = linspace(1, samplerate / (2*pi), muestrasVentana(1));
-plot(x, reCorrs);
-xlim([x(1) x(end)])
+plot(reCorrs);
 grid on;
 title('Autocorrelaciónes del residuo de la ventana')
-xlabel('Frecuencia (Hz)'), ylabel('Amplitud normalizada')
+xlabel('k'), ylabel('Amplitud normalizada')
 saveas(graf,"ej4_4_2.png")
 
 % Reproducimos el audio regenerado
