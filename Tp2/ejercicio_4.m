@@ -68,5 +68,5 @@ audio_regenerado = Resegmentacion(matriz_reconstruida);
 
 % Escuchamos
 player = audioplayer(audio_regenerado,samplerate);
-%playblocking(player);
+playblocking(player);
 audiowrite('audio_ej4.wav',audio_regenerado,samplerate)
