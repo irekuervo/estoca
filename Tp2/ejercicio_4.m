@@ -8,7 +8,7 @@ P = 50;
 alfa = 4.5e-5;
 
 % Abrimos el audio
-[audio,samplerate] = audioread("audio_01.wav");
+[audio,samplerate] = audioread('audio_01.wav');
 player = audioplayer(audio,samplerate);
 
 muestras_ventana = samplerate*tiempo_ventana; 
