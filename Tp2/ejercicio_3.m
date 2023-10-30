@@ -10,14 +10,14 @@ P = 5;
 pitch = 200; %Hz
 
 % Abrimos el audio
-[audio,samplerate] = audioread("audio_a.wav");
+[audio,samplerate] = audioread('audio_a.wav');
 player = audioplayer(audio,samplerate);
 playblocking(player);
 
  % Graficamos el audio
 figure();
 plot(audio);
-title("audio_a.wav", 'Interpreter', 'none')
+title('audio_a.wav', 'Interpreter', 'none')
 grid on;
 
 muestras_ventana = samplerate*tiempo_ventana; 
@@ -53,7 +53,7 @@ audio_regenerado = Resegmentacion(matriz_reconstruida);
 % Graficamos
 figure()
 plot(audio_regenerado);
-title("audio_a.wav regenerado", 'Interpreter', 'none')
+title('audio_a.wav regenerado', 'Interpreter', 'none')
 grid on;
 % Escuchamos
 player = audioplayer(audio_regenerado,samplerate);
@@ -68,14 +68,14 @@ tiempo_ventana = 30e-3;
 P = 5;
 
 % Abrimos el audio
-[audio,samplerate] = audioread("audio_s.wav");
+[audio,samplerate] = audioread('audio_s.wav');
 player = audioplayer(audio,samplerate);
 playblocking(player);
 
  % Graficamos el audio
 figure();
 plot(audio);
-title("audio_a.wav", 'Interpreter', 'none')
+title('audio_a.wav', 'Interpreter', 'none')
 grid on;
 
 muestras_ventana = samplerate*tiempo_ventana; 
@@ -113,7 +113,7 @@ plot(OtiginslReconstruida)
 % Graficamos
 figure()
 plot(audio_regenerado);
-title("audio_a.wav regenerado", 'Interpreter', 'none')
+title('audio_a.wav regenerado', 'Interpreter', 'none')
 grid on;
 % Escuchamos
 player = audioplayer(audio_regenerado,samplerate);
