@@ -1,0 +1,6 @@
+clear all;
+close all;
+N = 20000;
+ruido1 = normrnd(0, 5e-4,1,N);
+
+s = filter(1,[
