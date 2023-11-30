@@ -27,9 +27,9 @@ W(:,1) = [5 5 5];
 EstimacionV = zeros(L-M+1-8,1);
 
 for i = 1:L-M+1-8
-    Error = X(i+M-1)-U(i:i+M-1)'*W(:,i);
+    Error = X(i+M-1)-flip(U(i:i+M-1))'*W(:,i);
     W(:,i+1) = W(:,i) + mu*U(i:i+M-1)*Error;
-    EstimacionV(i) = W(:,i+1)'*U(i:i+M-1);
+    EstimacionV(i) = flip(U(i:i+M-1))'*W(:,i+1);
 end
 
 figure()
@@ -57,4 +57,7 @@ legend('Estimacion V','Ruido verdadero')
 
 figure()
 plot(ErrorEstimacion)
+
+%% Punto d
+
 
