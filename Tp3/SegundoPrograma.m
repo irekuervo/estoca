@@ -24,7 +24,6 @@ for i = 1:N
     U = uAuxiliar(9:20010);
     X = S + V;
 
-
     W = zeros(M,L-M+1-8);
     W(:,1) = [5 5 5];
     EstimacionV = zeros(L-M+1-8,1);
