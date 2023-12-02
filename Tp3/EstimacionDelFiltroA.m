@@ -1,5 +1,5 @@
 function [XVerdadera,SVerdadera,VVerdadera, ... 
-            EstimacionV,W] = EstimacionDelFiltro(M,mu)
+            EstimacionV,W] = EstimacionDelFiltroA(M,mu)
 L = 20000;
 Exedente = 20;
 
