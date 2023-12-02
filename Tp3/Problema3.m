@@ -61,13 +61,12 @@ end
 
 SVerdadera = S(M1:L+M1-1);
 EstimacionS = X2-EstimacionG -EstimacionV;
+EstimacionErrorE = (SVerdadera-EstimacionS).^2;
 
 figure()
 hold on
 plot(SVerdadera)
 plot(EstimacionS)
-
-EstimacionErrorE = (SVerdadera-EstimacionS).^2;
 
 figure()
 plot(EstimacionErrorE)
