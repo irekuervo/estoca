@@ -12,12 +12,15 @@ hold on
 plot(V);
 plot(U);
 legend('V','U')
+title('Ruidos V y U')
 
 figure()
 plot(S);
+title('S - Señal')
 
 figure()
 plot(X);
+title('S - Señal total')
 
 %% Punto c)
 clear all;
@@ -27,7 +30,7 @@ N = 20000;
 SNR = 20;
 
 mu = 50;
-w0 = [5 5 5 5 5]'; % valores iniciales del filtro
+w0 = [5 5 5]'; % valores iniciales del filtro
 [M,L] = size(w0);
 
 realizaciones = 500;
@@ -37,7 +40,7 @@ Err_est = zeros(N,1);
 for i = 1:realizaciones
     
     [X,S,V,U] = armar_seniales(N, SNR);
-    [W, V_est] = filtro1(S, V, U, mu, w0);
+    [W, V_est] = filtro_ruido(S, V, U, mu, w0);
  
     S_est = (X - V_est);
     Err_est = Err_est + (S_est - S).^2/realizaciones;
@@ -66,14 +69,20 @@ end
 
 figure()
 plot(Err_est)
+title('Err_est')
 figure()
 plot(J_est)
+title('J_est')
 
 figure()
+title('Coeficientes de W')
+lgd = cell(M,1);
 hold on
 for i = 1:M
     plot(W(i,:))
+    lgd{i} = strcat('w_',num2str(i-1));
 end
+legend(lgd);
 
 %% d)
 clear all;
@@ -95,7 +104,7 @@ for m = 1:M
     w0 = [w0 5]';
     for i = 1:realizaciones
         [X,S,V,U] = armar_seniales(N, SNR);
-        [W, V_est] = filtro1(S, V, U, mu, w0);
+        [W, V_est] = filtro_ruido(S, V, U, mu, w0);
 
         S_est = (X - V_est);
         Err_est = Err_est + (S_est - S).^2/realizaciones;
@@ -105,6 +114,7 @@ for m = 1:M
 end
 
 plot(E);
+title('Error vs M')
 
 %% e)
 clear all;
@@ -129,7 +139,7 @@ for index = 1:M
     Err_est = zeros(N,1);
     for i = 1:realizaciones
         [X,S,V,U] = armar_seniales(N, SNR);
-        [W, V_est] = filtro1(S, V, U, mu, w0);
+        [W, V_est] = filtro_ruido(S, V, U, mu, w0);
 
         S_est = (X - V_est);
         Err_est = Err_est + (S_est - S).^2/realizaciones;
@@ -145,6 +155,7 @@ legend(lgd);
 
 figure()
 plot(MU, E);
+title('Error vs MU')
 
 %% f)
 clear all;
@@ -168,7 +179,7 @@ J_est = zeros(N,1);
 Err_est = zeros(N,1);
 for i = 1:realizaciones
     [X,S,V,U] = armar_audio(audio, SNR);
-    [W, V_est] = filtro1(S, V, U, mu, w0);
+    [W, V_est] = filtro_ruido(S, V, U, mu, w0);
 
     S_est = (X - V_est);
     Err_est = Err_est + (S_est - S).^2/realizaciones;
@@ -180,11 +191,17 @@ sound(S_est, fs);
 
 figure()
 plot(Err_est)
+title('Err_est')
 figure()
 plot(J_est)
+title('J_est')
 
 figure()
+title('Coeficientes de W')
+lgd = cell(M,1);
 hold on
 for i = 1:M
     plot(W(i,:))
+    lgd{i} = strcat('w_',num2str(i-1));
 end
+legend(lgd);
