@@ -1,19 +1,16 @@
-function [W, V_est] = filtro_interferencia(S, V, U, mu, w0)
+function [W, G_est] = filtro_interferencia(X, Y, mu, w0)
 
-X = S + V;
-
-[N,L] = size(S);
+[N,L] = size(X);
 M = 2;
 W = zeros(M,N);
 W(:,1) = w0;
-V_est = zeros(N, 1);
+G_est = zeros(N, 1);
 
 for i = 1 : N - M - 1
-    k = i + M - 1;
-    Y = U(i:k)' * W(:,i);
-    error = X(k) - Y;
-    W(:,i+1) = W(:,i) + mu * U(i : k) * error;
-    V_est(k) = U(i:k)'*W(:,i+1);
+    salida = Y(i, :) * W(:, i);
+    error = X(i) - salida;
+    W(:,i+1) = W(:,i) + mu * Y(i, :)' * error;
+    G_est(i) = Y(i, :) * W(:,i+1);
 end
 
 end

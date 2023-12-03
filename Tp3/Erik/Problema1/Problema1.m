@@ -40,7 +40,7 @@ Err_est = zeros(N,1);
 for i = 1:realizaciones
     
     [X,S,V,U] = armar_seniales(N, SNR);
-    [W, V_est] = filtro_ruido(S, V, U, mu, w0);
+    [W, V_est] = filtro_ruido(X, U, mu, w0);
  
     S_est = (X - V_est);
     Err_est = Err_est + (S_est - S).^2/realizaciones;
@@ -104,7 +104,7 @@ for m = 1:M
     w0 = [w0 5]';
     for i = 1:realizaciones
         [X,S,V,U] = armar_seniales(N, SNR);
-        [W, V_est] = filtro_ruido(S, V, U, mu, w0);
+        [W, V_est] = filtro_ruido(X, U, mu, w0);
 
         S_est = (X - V_est);
         Err_est = Err_est + (S_est - S).^2/realizaciones;
@@ -139,7 +139,7 @@ for index = 1:M
     Err_est = zeros(N,1);
     for i = 1:realizaciones
         [X,S,V,U] = armar_seniales(N, SNR);
-        [W, V_est] = filtro_ruido(S, V, U, mu, w0);
+        [W, V_est] = filtro_ruido(X, U, mu, w0);
 
         S_est = (X - V_est);
         Err_est = Err_est + (S_est - S).^2/realizaciones;
@@ -179,7 +179,7 @@ J_est = zeros(N,1);
 Err_est = zeros(N,1);
 for i = 1:realizaciones
     [X,S,V,U] = armar_audio(audio, SNR);
-    [W, V_est] = filtro_ruido(S, V, U, mu, w0);
+    [W, V_est] = filtro_ruido(X, U, mu, w0);
 
     S_est = (X - V_est);
     Err_est = Err_est + (S_est - S).^2/realizaciones;

@@ -32,32 +32,32 @@ clear all;
 close all;
 
 N = 20000;
-SNR = 20;
+fs = 44100;
 
-mu = 10e-3;
+mu = 1e-3;
 w0 = [0 0]'; % valores iniciales del filtro
 [M,L] = size(w0);
 
-realizaciones = 500;
+realizaciones = 100;
 J_est = zeros(N,1);
 Err_est = zeros(N,1);
 
 for i = 1:realizaciones
     
-    [X,S,V,U] = armar_seniales(N, SNR);
-    [W, V_est] = filtro_ruido(S, V, U, mu, w0);
+    [X,S,G,Y]  = armar_seniales2(N, fs);
+    [W, G_est] = filtro_interferencia(X, Y, mu, w0);
  
-    S_est = (X - V_est);
+    S_est = (X - G_est);
     Err_est = Err_est + (S_est - S).^2/realizaciones;
-    J_est = J_est + (V_est - V).^2/realizaciones;
+    J_est = J_est + (G_est - G).^2/realizaciones;
     
     % Para debuggear
     if i == 1
         figure()
-        plot(V_est)
+        plot(G_est)
         hold on
-        plot(V);
-        legend('V_est','V')
+        plot(G);
+        legend('G_est','G')
         
         figure()
         plot(S_est)
@@ -78,7 +78,102 @@ figure()
 plot(J_est)
 
 figure()
+title('Coeficientes de W')
+lgd = cell(M,1);
 hold on
 for i = 1:M
     plot(W(i,:))
+    lgd{i} = strcat('w_',num2str(i-1));
 end
+legend(lgd);
+
+%% d)
+clear all;
+close all;
+
+N = 20000;
+fs = 44100;
+
+MU = [1e-3 2e-3 3e-3 4e-3 5e-3];
+[filas, M] = size(MU);
+
+w0 = [0 0]';
+convergencia_err = 7000;
+realizaciones = 500;
+E = zeros(M, 1);
+
+figure()
+hold on
+lgd = cell(5,1);
+for index = 1:M
+    mu = MU(index);
+    J_est = zeros(N,1);
+    Err_est = zeros(N,1);
+    
+    for i = 1:realizaciones
+        [X,S,G,Y]  = armar_seniales2(N, fs);
+        [W, G_est] = filtro_interferencia(X, Y, mu, w0);
+
+        S_est = (X - G_est);
+        Err_est = Err_est + (S_est - S).^2/realizaciones;
+        J_est = J_est + (G_est - G).^2/realizaciones;
+    end
+    
+    E(index) = mean(Err_est(convergencia_err:end));
+    plot(Err_est);
+    lgd{index} = strcat('mu=',num2str(mu));
+end
+
+legend(lgd);
+
+figure()
+plot(MU, E);
+title('Error vs MU')
+
+%% e)
+clear all;
+close all;
+
+realizaciones = 1;
+mu = 1e-3;
+w0 = [0 0]';
+M = 2;
+
+[audio, fs] = audioread('Pista_02.wav');
+[N, filas] = size(audio);
+
+%%% Prueba de armar_audio
+%   [X,S,G,Y] = armar_audio2(audio, fs);
+%   %Escuchamos que el audio tenga ruido
+%   sound(X, fs);
+
+J_est = zeros(N,1);
+Err_est = zeros(N,1);
+for i = 1:realizaciones
+        [X,S,G,Y]  = armar_audio2(audio, fs);
+        [W, G_est] = filtro_interferencia(X, Y, mu, w0);
+
+        S_est = (X - G_est);
+        Err_est = Err_est + (S_est - S).^2/realizaciones;
+        J_est = J_est + (G_est - G).^2/realizaciones;
+ end
+
+% Escuchamos el audio filtrado
+sound(S_est, fs);
+
+figure()
+plot(Err_est)
+title('Err_est')
+figure()
+plot(J_est)
+title('J_est')
+
+figure()
+title('Coeficientes de W')
+lgd = cell(M,1);
+hold on
+for i = 1:M
+    plot(W(i,:))
+    lgd{i} = strcat('w_',num2str(i-1));
+end
+legend(lgd);

@@ -1,8 +1,6 @@
-function [W, V_est] = filtro_ruido(S, V, U, mu, w0)
+function [W, V_est] = filtro_ruido(X, U, mu, w0)
 
-X = S + V;
-
-[N,L] = size(S);
+[N,L] = size(X);
 [M,L] = size(w0);
 W = zeros(M,N);
 W(:,1) = w0;
