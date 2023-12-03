@@ -1,34 +1,41 @@
-
+clear all;
+close all;
 
 %% Punto b)
-clear all;
-close all;
 N = 20000;
-SNR = 20;
-[X,S,V,U] = armar_seniales(N, SNR);
+a = 1;
+bS = [1 0.9 0.5 0.45 0.35 0.25];
+bU = [0.8 0.2 -0.1];
+varianzaR = 5e-4;
+mediaR = 0;
 
-figure()
-hold on
-plot(V);
-plot(U);
-legend('V','U')
+% S - señal de interes
+R_S = normrnd(mediaR, sqrt(varianzaR), N, 1); %ruido para generar S
+S = filter(bS, a, R_S);
+varianzaS = var(S);
 
-figure()
-plot(S);
+% V - señal de ruido blanco: debe cumplir SNR(S,V) = 20dB
+varianzaV = varianzaS / (10^2);
+V = normrnd(mediaR, sqrt(varianzaV), N, 1);
 
-figure()
-plot(X);
+% U - señal de ruido correlacionado
+U = filter(bU, a, V);
+
+% X
+X = S + V;
 
 %% Punto c)
-clear all;
-close all;
-
 N = 20000;
-SNR = 20;
-
 mu = 50;
 w0 = [5 5 5 5 5]'; % valores iniciales del filtro
 [M,L] = size(w0);
+
+[W, V_est] = filtro1(S, V, U, mu, w0);
+figure()
+plot(V_est)
+hold on
+plot(V);
+legend('V_est','V')
 
 realizaciones = 500;
 J_est = zeros(N,1);
@@ -36,25 +43,19 @@ Err_est = zeros(N,1);
 
 for i = 1:realizaciones
     
-    [X,S,V,U] = armar_seniales(N, SNR);
+    
+    
     [W, V_est] = filtro1(S, V, U, mu, w0);
  
     S_est = (X - V_est);
     Err_est = Err_est + (S_est - S).^2/realizaciones;
     J_est = J_est + (V_est - V).^2/realizaciones;
     
-    % Para debuggear
     if i == 1
         figure()
-        plot(V_est)
+        plot(S)
         hold on
-        plot(V);
-        legend('V_est','V')
-        
-        figure()
-        plot(S_est)
-        hold on
-        plot(S);
+        plot(S_est);
         legend('S_est','S')
         
         figure()
