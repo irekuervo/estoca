@@ -156,23 +156,20 @@ for index = 1:M
     plot(Err_est);
     lgd{index} = strcat('mu=',num2str(mu));
 end
-axis([0 0.5e4 0 7e-3])
+axis([0 2e4 0 5e-4])
 legend(lgd);
-saveas(graf,'d_1.png')
+saveas(graf,'e_1.png')
+legend(lgd);
 
-graf = figure;
+figure()
 plot(MU, E);
 title('Error vs MU')
-grid on
-xlabel('MU') 
-ylabel('Error(MU)') 
-saveas(graf,'d_2.png')
 
 %% e)
 clear all;
 close all;
 
-realizaciones = 30;
+realizaciones = 1;
 mu = 1e-3;
 w0 = [0 0]';
 M = 2;
@@ -196,19 +193,14 @@ for i = 1:realizaciones
         J_est = J_est + (G_est - G).^2/realizaciones;
 end
 
-graf = figure;
-plot(S_est)
-hold on
-title('Estimacion de S')
-plot(S);
-grid on
-legend('S_est','S')
-xlabel('n') 
-ylabel('Nivel') 
-axis([832000 833000 -0.1 0.1])
-saveas(graf,'e_1.png')
+figure()
+plot(Err_est)
+title('Err_est')
+figure()
+plot(J_est)
+title('J_est')
 
-graf = figure;
+figure()
 title('Coeficientes de W')
 lgd = cell(M,1);
 hold on
@@ -216,29 +208,7 @@ for i = 1:M
     plot(W(i,:))
     lgd{i} = strcat('w_',num2str(i-1));
 end
-grid on
 legend(lgd);
-xlabel('n') 
-ylabel('W(n)') 
-saveas(graf,'e_2.png')
-
-graf = figure;
-plot(Err_est)
-grid on
-title('Curva de Error (30 realizaciones)')
-xlabel('n') 
-ylabel('Err(n)') 
-axis([0 1e4 0 9e-3])
-saveas(graf,'e_3.png')
-
-graf = figure;
-plot(J_est)
-grid on
-title('Curva de aprendizaje J (30 realizaciones)')
-xlabel('n') 
-ylabel('J(n)') 
-axis([0 1e4 0 9e-3])
-saveas(graf,'e_4.png')
 
 %%
 % Escuchamos el audio con ruido

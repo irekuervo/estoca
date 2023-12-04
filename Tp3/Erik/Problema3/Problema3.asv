@@ -5,20 +5,16 @@
 
 %%
 
-
-
-%% a)
 clear all;
 close all;
 
+%% a)
 N = 20000;
 fs = 44100;
 SNR = 20;
-realizaciones = 500;
-J_est = zeros(N,1);
-Err_est = zeros(N,1);
+Repeticiones = 500;
 
-for i = 1:realizaciones
+for i = 1:Repeticiones
     [X1,S,V,U] = armar_seniales(N, SNR);
     [X2,S2,G,Y] = armar_seniales2(N,fs);
 
@@ -36,9 +32,12 @@ for i = 1:realizaciones
     [M,L] = size(w0);
     [W, G_est] = filtro_interferencia(X, Y, mu, w0);
 
+    % vemos los resultados
+    J_est = zeros(N,1);
+    Err_est = zeros(N,1);
+
     S_est = (X - G_est-V_est);
-    Err_est = Err_est + (S_est - S).^2/realizaciones;
-    J_est = J_est + (G_est - G).^2/realizaciones;
+    Err_est = Err_est + (S_est - S).^2;
 end
     
 graf = figure;
@@ -51,7 +50,7 @@ legend('V_est','V')
 xlabel('n') 
 ylabel('Nivel') 
 axis([18000 18100 -0.01 0.01])
-saveas(graf,'b_1.png')
+saveas(graf,'c_1.png')
 
 graf = figure;
 plot(G_est)
@@ -62,8 +61,8 @@ title('Estimación de G')
 legend('V_est','V')
 xlabel('n') 
 ylabel('Nivel') 
-axis([18000 18500 -0.4 0.4])
-saveas(graf,'b_2.png')
+axis([18000 18100 -0.01 0.01])
+saveas(graf,'c_1.png')
 
 graf = figure;
 plot(S_est)
@@ -75,15 +74,7 @@ legend('S_est','S')
 xlabel('n') 
 ylabel('Nivel') 
 axis([18000 18100 -0.1 0.1])
-saveas(graf,'b_3.png')
-
-graf = figure;
-plot(Err_est)
-grid on
-title('Curva de Error (500 realizaciones)')
-xlabel('n') 
-ylabel('Err(n)') 
-saveas(graf,'b_4.png')
+saveas(graf,'a_2.png')
 
 %% b)
 
