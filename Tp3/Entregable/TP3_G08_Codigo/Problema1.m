@@ -7,20 +7,33 @@ N = 20000;
 SNR = 20;
 [X,S,V,U] = armar_seniales(N, SNR);
 
-figure()
+graf = figure;
 hold on
 plot(V);
 plot(U);
+grid on
 legend('V','U')
 title('Ruidos V y U')
+xlabel('n') 
+ylabel('Nivel') 
+axis([18000 18100 -0.015 0.015])
+saveas(graf,'b_1.png')
 
-figure()
+graf = figure;
 plot(S);
-title('S - Señal')
+grid on
+title('S - Señal de interés')
+xlabel('n') 
+ylabel('Nivel') 
+saveas(graf,'b_2.png')
 
-figure()
+graf = figure;
 plot(X);
-title('S - Señal total')
+grid on
+title('X - Señal con ruido')
+xlabel('n') 
+ylabel('Nivel') 
+saveas(graf,'b_3.png')
 
 %% Punto c)
 clear all;
@@ -46,35 +59,33 @@ for i = 1:realizaciones
     Err_est = Err_est + (S_est - S).^2/realizaciones;
     J_est = J_est + (V_est - V).^2/realizaciones;
     
-    % Para debuggear
-    if i == 1
-        figure()
-        plot(V_est)
-        hold on
-        plot(V);
-        legend('V_est','V')
-        
-        figure()
-        plot(S_est)
-        hold on
-        plot(S);
-        legend('S_est','S')
-        
-        figure()
-        plot(Err_est)
-        figure()
-        plot(J_est)
-    end
 end
 
-figure()
-plot(Err_est)
-title('Err_est')
-figure()
-plot(J_est)
-title('J_est')
+graf = figure;
+plot(V_est)
+hold on
+plot(V);
+grid on
+title('Estimación de V')
+legend('V_est','V')
+xlabel('n') 
+ylabel('Nivel') 
+axis([18000 18100 -0.01 0.01])
+saveas(graf,'c_1.png')
 
-figure()
+graf = figure;
+plot(S_est)
+hold on
+title('Estimacion de S')
+plot(S);
+grid on
+legend('S_est','S')
+xlabel('n') 
+ylabel('Nivel') 
+axis([18000 18100 -0.1 0.1])
+saveas(graf,'c_2.png')
+
+graf = figure;
 title('Coeficientes de W')
 lgd = cell(M,1);
 hold on
@@ -82,7 +93,27 @@ for i = 1:M
     plot(W(i,:))
     lgd{i} = strcat('w_',num2str(i-1));
 end
+grid on
 legend(lgd);
+xlabel('n') 
+ylabel('W(n)') 
+saveas(graf,'c_3.png')
+
+graf = figure;
+plot(Err_est)
+grid on
+title('Curva de Error (500 realizaciones)')
+xlabel('n') 
+ylabel('Err(n)') 
+saveas(graf,'c_4.png')
+
+graf = figure;
+plot(J_est)
+grid on
+title('Curva de aprendizaje J (500 realizaciones)')
+xlabel('n') 
+ylabel('J(n)') 
+saveas(graf,'c_5.png')
 
 %% d)
 clear all;
@@ -113,8 +144,13 @@ for m = 1:M
     E(m) = mean(Err_est(convergencia_err:end));
 end
 
+graf = figure;
 plot(E);
 title('Error vs M')
+grid on
+xlabel('M') 
+ylabel('Error(M)') 
+saveas(graf,'d_1.png')
 
 %% e)
 clear all;
@@ -130,7 +166,11 @@ convergencia_err = 7000;
 realizaciones = 500;
 E = zeros(M, 1);
 
-figure()
+graf = figure;
+title('Curvas de aprendizaje para valores de MU')
+xlabel('n') 
+ylabel('J(n)') 
+grid on
 hold on
 lgd = cell(7,1);
 for index = 1:M
@@ -150,22 +190,27 @@ for index = 1:M
     plot(Err_est);
     lgd{index} = strcat('mu=',num2str(mu));
 end
-
+axis([0 2e4 0 5e-4])
 legend(lgd);
+saveas(graf,'e_1.png')
 
-figure()
+graf = figure;
 plot(MU, E);
 title('Error vs MU')
+grid on
+xlabel('MU') 
+ylabel('Error(MU)') 
+saveas(graf,'e_2.png')
 
 %% f)
 clear all;
 close all;
 
 SNR = 20;
-realizaciones = 1;
-mu = 50;
-w0 = [5 5 5]';
-M = 3;
+realizaciones = 50;
+mu = 40;
+w0 = [5 5]';
+M = 2;
 
 [audio, fs] = audioread('Pista_05.wav');
 [N, filas] = size(audio);
@@ -186,14 +231,21 @@ for i = 1:realizaciones
     J_est = J_est + (V_est - V).^2/realizaciones;
 end
 
-figure()
-plot(Err_est)
-title('Err_est')
-figure()
-plot(J_est)
-title('J_est')
+% graficos
 
-figure()
+graf = figure;
+plot(S_est)
+hold on
+title('Estimacion de S')
+plot(S);
+grid on
+legend('S_est','S')
+xlabel('n') 
+ylabel('Nivel') 
+axis([310000 310200 -0.1 0.1])
+saveas(graf,'f_1.png')
+
+graf = figure;
 title('Coeficientes de W')
 lgd = cell(M,1);
 hold on
@@ -201,7 +253,29 @@ for i = 1:M
     plot(W(i,:))
     lgd{i} = strcat('w_',num2str(i-1));
 end
+grid on
 legend(lgd);
+xlabel('n') 
+ylabel('W(n)') 
+saveas(graf,'f_2.png')
+
+graf = figure;
+plot(Err_est)
+grid on
+title('Curva de Error (50 realizaciones)')
+xlabel('n') 
+ylabel('Err(n)') 
+axis([0 30000 0 3.5e-4])
+saveas(graf,'f_3.png')
+
+graf = figure;
+plot(J_est)
+grid on
+title('Curva de aprendizaje J (50 realizaciones)')
+xlabel('n') 
+ylabel('J(n)') 
+axis([0 30000 0 3.5e-4])
+saveas(graf,'f_4.png')
 
 %%
 % Escuchamos el audio con ruido
